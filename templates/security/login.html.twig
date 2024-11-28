@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    {% include "side_nave.html.twig" %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                {% if error %}
+                    <div class="alert alert-danger text-center">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="alert alert-info text-center">
+                        Vous êtes connecté en tant que {{ app.user.userIdentifier }}. <a href="{{ path('app_logout') }}" class="alert-link">Se déconnecter</a>
+                    </div>
+                {% else %}
+                    <h1 class="text-center mb-4">Se connecter</h1>
+
+                    <!-- Formulaire de connexion -->
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form method="post">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Adresse email</label>
+                                    <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Mot de passe</label>
+                                    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                                </div>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                                <!-- Bouton de connexion -->
+                                <button class="btn btn-primary w-100" type="submit">
+                                    Se connecter
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <p class="text-center mt-3">
+                        Vous n'avez pas encore de compte ? <a href="{{ path('app_register') }}">Inscrivez-vous</a>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html.twig' %}
+{% endblock %}

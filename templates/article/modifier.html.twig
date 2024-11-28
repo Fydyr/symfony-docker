@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LuckyController!{% endblock %}
+
+{% block body %}
+
+    {% include 'header.html.twig' %}
+
+    {% include "side_nave.html.twig" %}
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Modifier un article</h1>
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Modifier un article</li>
+                    </ol>
+
+                    <div class="card p-4">
+                        <h5 class="card-title">Formulaire de modification d'article</h5>
+
+                        {{ form_start(form) }}
+                            {{ form_row(form.titre) }}
+                            {{ form_row(form.texte) }}
+                            {{ form_row(form.publie) }}
+                            {{ form_row(form.date) }}
+                            {{ form_row(form.save) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </main>
+            {% include 'footer.html.twig' %}
+
+{% endblock %}

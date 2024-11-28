@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supprimer un article{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    {% include "side_nave.html.twig" %}
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Suppression d'article</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="{{ path('app_article') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Suppression d'article</li>
+                </ol>
+
+                {# Affichage des messages flash (succès ou erreur) #}
+                {% for message in app.flashes('error') %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                {# Message par défaut si aucun article n'est trouvé ou si l'ID est manquant #}
+                {% if article is null %}
+                    <div class="alert alert-warning">
+                        Aucun article sélectionné. Veuillez fournir un ID pour supprimer un article.
+                    </div>
+                {% endif %}
+            </div>
+        </main>
+        {% include 'footer.html.twig' %}
+{% endblock %}

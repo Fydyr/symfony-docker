@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Articles{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    {% include 'side_nave.html.twig' %}
+
+    <h1>Liste des Articles</h1>
+
+    {% if articles is empty %}
+        <div class="alert alert-warning">
+            Aucun article trouvé.
+        </div>
+    {% else %}
+        <div class="row">
+            {% for article in articles %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        {% if article.image %}
+                            <img src="{{ asset(article.image) }}" alt="Image de {{ article.titre }}" class="card-img-top img-fluid">
+                        {% else %}
+                            <img src="{{ asset('uploads/brochures/default.jpg') }}" alt="Image par défaut" class="card-img-top img-fluid">
+                        {% endif %}
+                        <div class="card-header">
+                            <h5 class="card-title">{{ article.titre }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                {{ article.texte|length > 100 ? article.texte[:100] ~ '...' : article.texte }}
+                            </p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <small>
+                                Publié le {{ article.date|date('d/m/Y') }} -
+                                {% if article.publie %}
+                                    <span class="text-success">Publié</span>
+                                {% else %}
+                                    <span class="text-danger">Non publié</span>
+                                {% endif %}
+                            </small>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ path('app_article_modifier', { id: article.id }) }}" class="btn btn-primary btn-sm">Modifier</a>
+                            <a href="{{ path('app_article_supprimer', { id: article.id }) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% include 'footer.html.twig' %}
+{% endblock %}
